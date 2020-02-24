@@ -1,39 +1,12 @@
 
 unsigned char pinsPwm[2] = { 9, 10 };
 unsigned char pinControlPwm[4] = {7, 8, 11, 12};
-unsigned char pinPWMOut1 = 8;
-unsigned char pinPWMOut2 = 7;
+
 unsigned char dutyCicle = 0;
 unsigned char pinSerial = 0;
-unsigned char bandera = 0;
+unsigned char bandera = 0, boton;
 unsigned char j = 0;
-/*
- * Serial.println( dutyCicle );
-    analogWrite( 9, dutyCicle * 255 / 100);
-    dutyCicle = 0;
 
-
-    unsigned char data = Serial.read(), i = 0;
-  switch( j ){
-    case 0:
-      dutyCicle = 0;
-      pinSerial = data - '0';
-      j++;
-      break;
-    case 1:
-      pinSerial *= 10;
-      pinSerial += data - '0';
-      j++;
-    case 6:
-      bandera = 1;
-      j = 0;
-      break;
-     default:
-      j++;
-      dutyCicle *= 10;
-      dutyCicle += data - '0';
-  }
- */
 
 void setTMR0(){
   TCCR1A = 0x00;
@@ -62,7 +35,7 @@ void setPinsPwms( unsigned char n ){
 
 void pwm(unsigned char pin){
   pinMode( pin, OUTPUT );
-  analogWrite( pin, 0 );
+  analogWrite( pin, 123 );
 }
 
 void serialRead(){
@@ -87,6 +60,7 @@ void setup() {
    Serial.println("HOLA, soy el Chacras! UwU");
    setPwms( 2 );
    setPinsPwms( 4 );  
+   pinMode( 6, INPUT );
 }
 
 void loop() {
@@ -98,5 +72,14 @@ void loop() {
     bandera = 0;
     Serial.println( dutyCicle );
     analogWrite( pinSerial, dutyCicle * 255 / 100 );
+  }
+  if( digitalRead( 6 ) == 0){
+     analogWrite( 10, 0 );
+     analogWrite( 9, 255); 
+  }
+  else{
+    delay(100);
+    analogWrite( 10, 123 );
+    analogWrite( 9, 123); 
   }
 }
