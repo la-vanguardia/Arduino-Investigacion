@@ -17,29 +17,27 @@ Motor::Motor( unsigned char pinPwm, unsigned char pinForward, unsigned pinBack )
 
 void Motor::setDutyCicle( unsigned char dutyCicle ){
     _dutyCicle = dutyCicle;
-    analogWrite( _pinPwm , _dutyCicle * 255 / 100);
 }
 
 unsigned char Motor::getDutyCicle(){
     return _dutyCicle;
 }
 
-void Motor::action( unsigned char action  ){
-    switch( action ){
-        case STOP:
-            analogWrite(_pinPwm, 0);
-            break;
-        case START:
-            analogWrite(_pinPwm, _dutyCicle * 255 / 100);
-            break;
-        case FORWARD:
-            digitalWrite(_pinForward, 1);
-            digitalWrite(_pinBack, 0);
-            break;
-        case BACK:
-            digitalWrite(_pinForward, 0);
-            digitalWrite(_pinBack, 1);
-            break;
-    }
+void Motor::start(){
+    analogWrite( _pinPwm , _dutyCicle * 255 / 100);
+}
+
+void Motor::stop(){
+    analogWrite( _pinPwm , 0);
+}
+
+void Motor::back(){
+    digitalWrite(_pinForward, 0);
+    digitalWrite(_pinBack, 1);
+}
+
+void Motor::forward(){
+    digitalWrite(_pinForward, 1);
+    digitalWrite(_pinBack, 0);
 }
 
