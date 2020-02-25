@@ -1,3 +1,4 @@
+#include "Motor.h"
 
 unsigned char pinsPwm[2] = { 9, 10 };
 unsigned char pinControlPwm[4] = {7, 8, 11, 12};
@@ -6,7 +7,7 @@ unsigned char dutyCicle = 0;
 unsigned char pinSerial = 0;
 unsigned char bandera = 0, boton;
 unsigned char j = 0;
-
+Motor motor(9, 7, 8);
 
 void setTMR0(){
   TCCR1A = 0x00;
@@ -58,14 +59,17 @@ void setup() {
   // put your setup code here, to run once:
    Serial.begin(9600);
    Serial.println("HOLA, soy el Chacras! UwU");
-   setPwms( 2 );
-   setPinsPwms( 4 );  
-   pinMode( 6, INPUT );
+   //setPwms( 2 );
+   //setPinsPwms( 4 );  
+   //pinMode( 6, INPUT );
+   motor.setDutyCicle( 50 );
+  Serial.println( motor.getDutyCicle() );
+   
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  if( Serial.available() > 0 ){
+  /*if( Serial.available() > 0 ){
     serialRead();
   }
   if( bandera == 1 ){
@@ -81,5 +85,7 @@ void loop() {
     delay(100);
     analogWrite( 10, 123 );
     analogWrite( 9, 123); 
-  }
+  }*/
+
+  
 }
