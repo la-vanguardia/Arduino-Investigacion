@@ -1,7 +1,7 @@
 #include "Arduino.h"
 #include "Motor.h"
 
-Motor::Motor( unsigned char pinPwm, unsigned char pinForward, unsigned pinBack ){
+Motor::Motor( unsigned char pinPwm, unsigned char pinForward, unsigned char pinBack ){
     _pinPwm = pinPwm;
     _pinForward = pinForward;
     _pinBack = pinBack;
@@ -40,4 +40,3 @@ void Motor::forward(){
     digitalWrite(_pinForward, 1);
     digitalWrite(_pinBack, 0);
 }
-

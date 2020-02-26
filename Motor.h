@@ -8,7 +8,7 @@
 class Motor{
    
     public:
-        Motor( unsigned char pinPwm, unsigned char pinForward, unsigned pinBack );
+        Motor( unsigned char pinPwm, unsigned char pinForward, unsigned char pinBack );
         void setDutyCicle( unsigned char dutyCicle );
 
         void start();
@@ -26,5 +26,7 @@ class Motor{
 
     
 };
+
+
 
 #endif

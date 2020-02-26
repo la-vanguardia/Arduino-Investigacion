@@ -1,5 +1,5 @@
-#ifndef Motor_h
-#define Motor_h
+#ifndef Motors_h
+#define Motors_h
 
 #include "Arduino.h"
 #include "Motor.h"
@@ -9,7 +9,7 @@ enum motorRef{
     bottomRight,
     topLeft,
     topRight
-}
+};
 
 enum actions{
     START,
@@ -20,8 +20,7 @@ enum actions{
 
 class Motors{
     public:
-        
-        Motors( unsigned char *pinsPwm, unsigned char *pinsForward, unsigned char *pinsBack );
+        Motors( unsigned char *pinsPwm, unsigned char *pinsForward, unsigned char *pinsBack  );
         void setDutyCicle( unsigned char motorReference, unsigned char dutyCicle );
         void action( unsigned char action );
 
@@ -30,7 +29,7 @@ class Motors{
         Motor _bottomRight;
         Motor _topLeft;
         Motor _topRight;
-}
+};
 
 
 #endif

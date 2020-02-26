@@ -1,12 +1,15 @@
+
 #include "arduino.h"
+#include "Motor.h"
 #include "Motors.h"
 
-Motors::Motors( unsigned char *pinsPwm, unsigned char *pinsForward, unsigned char *pinsBack  ){
-    unsigned char i;
-    _bottomLeft = Motor( pinsPwm[0], pinsForward[0], pinsBack[0] );
-    _bottomRight = Motor( pinsPwm[1], pinsForward[1], pinsBack[1] );
-    _topLeft = Motor( pinsPwm[2], pinsForward[2], pinsBack[2] );
-    _topRight = Motor( pinsPwm[3], pinsForward[3], pinsBack[3] );
+Motors::Motors( unsigned char *pinsPwm, unsigned char *pinsForward, unsigned char *pinsBack  )
+:_bottomLeft( pinsPwm[0], pinsForward[0], pinsBack[0] ),
+_bottomRight( pinsPwm[1], pinsForward[1], pinsBack[1] ),
+_topLeft( pinsPwm[2], pinsForward[2], pinsBack[2] ),
+_topRight( pinsPwm[3], pinsForward[3], pinsBack[3] )
+{
+ 
 }
 
 void Motors::setDutyCicle( unsigned char motorReference, unsigned char dutyCicle ){
