@@ -12,6 +12,13 @@ _topRight( pinsPwm[3], pinsForward[3], pinsBack[3] )
  
 }
 
+void Motors::setAllDutyCicle( unsigned char dutyCicle ){
+  _bottomLeft.setDutyCicle( dutyCicle );
+  _bottomRight.setDutyCicle( dutyCicle );
+  _topLeft.setDutyCicle( dutyCicle );
+  _topRight.setDutyCicle( dutyCicle );
+}
+
 void Motors::setDutyCicle( unsigned char motorReference, unsigned char dutyCicle ){
     switch( motorReference ){
         case bottomLeft:
@@ -29,7 +36,45 @@ void Motors::setDutyCicle( unsigned char motorReference, unsigned char dutyCicle
     }
 }
 
-void Motors::action( unsigned char action ){
+unsigned char Motors::getDutyCicle( unsigned char motorReference ){
+  unsigned char dutyCicle;
+  switch( motorReference ){
+        case bottomLeft:
+            dutyCicle = _bottomLeft.getDutyCicle();
+            break;
+        case bottomRight:
+            dutyCicle = _bottomRight.getDutyCicle();
+            break;
+        case topLeft:
+            dutyCicle = _topLeft.getDutyCicle();
+            break;
+        case topRight:
+            dutyCicle = _topRight.getDutyCicle();
+            break;        
+    }
+
+ return dutyCicle;
+}
+
+
+void Motors::motorAction( unsigned char motorReference, unsigned char action ){
+   switch( motorReference ){
+        case bottomLeft:
+            _bottomLeft.setAction( action );
+            break;
+        case bottomRight:
+            _bottomRight.setAction( action );
+            break;
+        case topLeft:
+            _topLeft.setAction( action );
+            break;
+        case topRight:
+            _topRight.setAction( action );
+            break;  
+   }
+}
+
+void Motors::setAction( unsigned char action ){
     switch( action ){
         case STOP:
             _bottomLeft.stop();

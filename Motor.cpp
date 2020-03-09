@@ -19,6 +19,23 @@ void Motor::setDutyCicle( unsigned char dutyCicle ){
     _dutyCicle = dutyCicle;
 }
 
+void Motor::setAction( unsigned char action ){
+  switch( action ){
+    case START:
+      start();
+      break;
+    case STOP:
+      stop();
+      break;
+    case BACK:
+      back();
+      break;
+    case FORWARD:
+      forward();
+      break;
+  }
+}
+
 unsigned char Motor::getDutyCicle(){
     return _dutyCicle;
 }

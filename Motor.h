@@ -3,20 +3,28 @@
 
 #include "Arduino.h"
 
-
+enum actions{
+    START,
+    STOP,
+    FORWARD,
+    BACK
+};
 
 class Motor{
    
     public:
         Motor( unsigned char pinPwm, unsigned char pinForward, unsigned char pinBack );
         void setDutyCicle( unsigned char dutyCicle );
+        void setAction( unsigned char action );
+
+        unsigned char getDutyCicle();
 
         void start();
         void stop();
         void back();
         void forward();
 
-        unsigned char getDutyCicle();
+        
 
     private:
         unsigned char _pinPwm;
