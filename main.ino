@@ -1,5 +1,6 @@
 #include "Motor.h"
 #include "Motors.h"
+#include <TimerOne.h>
 
 #define MOTORBOTTOMLEFT 2
 #define MOTORBOTTOMRIGHT 3
@@ -18,14 +19,40 @@ unsigned char pinsForwards[4] = {8, 13, 3, 13};
 unsigned char pinsPwm[4] = { 2, 3, 4, 5 };
 unsigned char pinsBack[4] = { 22, 24, 26, 28 };
 unsigned char pinsForwards[4] = { 23, 25, 27, 29 };
+unsigned char pinsInterrupt[4] = { 21, 20, 19, 18 };
+unsigned long int counters[4] = { 0 };
+double rpmValues[4] = { 0.0 };
 
-unsigned char j = 0;
+unsigned char j = 0, bandera_rpm = 0;
 unsigned char dutyCicle = 0;
 unsigned char pinSerial = 0, bandera = 0;
 unsigned char motorSelected;
 
 Motors motors( pinsPwm, pinsBack, pinsForwards );
 
+void counterMotorBottomLeft(){
+  counters[0]++;
+}
+
+void counterMotorBottomRight(){
+  counters[1]++;
+}
+
+void counterMotorTopLeft(){
+  counters[2]++;
+}
+
+void counterMotorTopRight(){
+  counters[3]++;
+}
+
+void rpm(){
+  unsigned char i;
+  for( i=0; i<4; i++){
+    rpmValues[i] = counters[i] * 60 / 2;
+  }
+  bandera_rpm = 1;
+}
 
 unsigned char selectMotor( unsigned char pin ){
   unsigned char motorLocation = error;
@@ -67,7 +94,17 @@ void setup() {
    Serial.begin( 19200 );
    Serial.println("HOLA, soy el Chacras! UwU");
 
-   motors.setAllDutyCicle( 125 );
+   motors.setAllDutyCicle( 70 );
+   motors.setAction( START );
+   motors.setAction( BACK );
+
+   Timer1.initialize( 1000000 );
+   Timer1.attachInterrupt( rpm );
+   attachInterrupt( digitalPinToInterrupt( pinsInterrupt[0] ) , counterMotorBottomLeft, RISING);
+   attachInterrupt( digitalPinToInterrupt( pinsInterrupt[1] ) , counterMotorBottomRight, RISING);
+   attachInterrupt( digitalPinToInterrupt( pinsInterrupt[2] ) , counterMotorTopLeft, RISING);
+   attachInterrupt( digitalPinToInterrupt( pinsInterrupt[3] ) , counterMotorTopRight, RISING);
+   
 }
 
 void loop() {
@@ -81,6 +118,13 @@ void loop() {
     motors.setDutyCicle( motorSelected, dutyCicle );
     Serial.println( motorSelected );
     Serial.println( dutyCicle );
+  }
+  if( bandera_rpm == 1 ){
+    bandera_rpm = 0;
+    Serial.println( counters[0] );
+    Serial.println( counters[1] );
+    counters[0] = 0;
+    counters[1] = 0;
   }
   
 

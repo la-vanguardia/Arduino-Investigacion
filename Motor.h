@@ -10,6 +10,11 @@ enum actions{
     BACK
 };
 
+enum states{
+  ON,
+  OFF
+};
+
 class Motor{
    
     public:
@@ -31,6 +36,7 @@ class Motor{
         unsigned char _pinForward;
         unsigned char _pinBack;
         unsigned char _dutyCicle;
+        unsigned char _state;
 
     
 };

@@ -17,6 +17,9 @@ Motor::Motor( unsigned char pinPwm, unsigned char pinForward, unsigned char pinB
 
 void Motor::setDutyCicle( unsigned char dutyCicle ){
     _dutyCicle = dutyCicle;
+    if( _state == ON ){
+      start();
+    }
 }
 
 void Motor::setAction( unsigned char action ){
@@ -42,10 +45,12 @@ unsigned char Motor::getDutyCicle(){
 
 void Motor::start(){
     analogWrite( _pinPwm , _dutyCicle * 255 / 100);
+    _state = ON;
 }
 
 void Motor::stop(){
     analogWrite( _pinPwm , 0);
+    _state = OFF;
 }
 
 void Motor::back(){
