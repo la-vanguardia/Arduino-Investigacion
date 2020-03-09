@@ -6,8 +6,19 @@
 * Gatica, Isaias
 * Saez, Lautaro Andres
 
-## Instrumentos
+## Articulos utilizados 🔌
 
-## Vehiculo
+- Microcontrolador: Arduino Mega
+- Motores: 24V **datos**
+- Reducciones: **datos**
+- encoders: opticos
 
-## Pruebas
+## Tareas 🧾
+
+- [ ] Seleccionar baterias
+
+- [ ] Retroalimentar los 4 motores de forma individual
+
+- [x] Lograr movimiento de los motores de forma independiente
+
+- [ ] Rutina de bloque de ruedas
