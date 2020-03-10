@@ -1,6 +1,6 @@
 # Proyecto *El Chacras* 🚗
 
-## Integrantes 
+## Integrantes 🏅
 
 * Martin, Santiago
 * Gatica, Isaias
@@ -25,7 +25,7 @@
 
 - [ ] Fabricar los acoples para los encoders
 
-## Funcionamiento
+## Funcionamiento 🧩
 
 El vehiculo cuenta con una retroalimentacion la velocidad de cada motor, esto permite realizar diferentes acciones sobre el vehiculo, permitiendo un mayor control sobre el mismo. Las tareas que permite realizar este sistema de conexion es:
 
@@ -84,5 +84,20 @@ Este apartado sigue en desarrollo, siendo uno de los mas complicados debido a di
 2. Escases del material necesario para las pruebas.
 
 Actualmente se estudia la posibilidad de implementar esta funcionalidad dentro de las libreria **MOTOR**, permitiendo asi un control automatico de cada motor y facilitando dicho control.
+
+### Comunicacion 📡
+
+Para la comunicacion se opto por utilizar **JSON** (**J**ava**S**cript **O**bject **N**otation) la trama enviada posee el siguiente esquema:
+
+**esquema**
+
+En cuanto a la trama recibida la misma posee la siguiente forma:
+
+**esquema**
+
+Esta opcion fue la seleccionada debido a la versatilidad de la misma e independencia del arreglo de los valores, permitiendo identificarlos por una 
+**key** y pudiendo contener diferentes tipos de estructuras tales como **array**, **JSON** o variables de cualquier tipo.
+
+
 
 
