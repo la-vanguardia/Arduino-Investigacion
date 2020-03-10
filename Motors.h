@@ -17,8 +17,10 @@ class Motors{
     public:
         Motors( unsigned char *pinsPwm, unsigned char *pinsForward, unsigned char *pinsBack  );
         void setAllDutyCicle( unsigned char dutyCicle );
-        void setDutyCicle( unsigned char motorReference, unsigned char dutyCicle );
+        void setAllState( unsigned char state );
 
+        void setDutyCicle( unsigned char motorReference, unsigned char dutyCicle );
+        
         unsigned char getDutyCicle( unsigned char motorReference );
         
         void motorAction( unsigned char motorReference, unsigned char action );

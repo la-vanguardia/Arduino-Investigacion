@@ -2,10 +2,14 @@
 #include "Motors.h"
 #include <TimerOne.h>
 
-#define MOTORBOTTOMLEFT 2
-#define MOTORBOTTOMRIGHT 3
-#define MOTORTOPLEFT 4
-#define MOTORTOPRIGHT 5
+#define MOTOR_BOTTOM_LEFT 2
+#define MOTOR_BOTTOM_RIGHT 3
+#define MOTOR_TOP_LEFT 4
+#define MOTOR_TOP_RIGHT 5
+
+#define PULSE 4
+#define ONE_MINUTE 60   //tiempo en segundos
+#define TIME_INTERRUPT 1 //tiempo en segundos
 
 /* MOTORES CON ARDUINO NANO / UNO  */
 /* 
@@ -49,7 +53,7 @@ void counterMotorTopRight(){
 void rpm(){
   unsigned char i;
   for( i=0; i<4; i++){
-    rpmValues[i] = counters[i] * 60 / 2;
+    rpmValues[i] = counters[i] * ONE_MINUTE / (PULSE * TIME_INTERRUPT);
   }
   bandera_rpm = 1;
 }
@@ -57,16 +61,16 @@ void rpm(){
 unsigned char selectMotor( unsigned char pin ){
   unsigned char motorLocation = error;
   switch( pin ){
-    case MOTORBOTTOMLEFT:
+    case MOTOR_BOTTOM_LEFT:
         motorLocation = bottomLeft;
         break;
-    case MOTORBOTTOMRIGHT:
+    case MOTOR_BOTTOM_RIGHT:
         motorLocation = bottomRight;
         break;
-      case MOTORTOPLEFT:
+      case MOTOR_TOP_LEFT:
         motorLocation = topLeft;
         break;
-    case MOTORTOPRIGHT:
+    case MOTOR_TOP_RIGHT:
         motorLocation = topRight;
         break;
   }
@@ -94,10 +98,8 @@ void setup() {
    Serial.begin( 19200 );
    Serial.println("HOLA, soy el Chacras! UwU");
 
-   motors.setAllDutyCicle( 70 );
    motors.setAction( START );
-   motors.setAction( BACK );
-
+   
    Timer1.initialize( 1000000 );
    Timer1.attachInterrupt( rpm );
    attachInterrupt( digitalPinToInterrupt( pinsInterrupt[0] ) , counterMotorBottomLeft, RISING);
@@ -125,6 +127,7 @@ void loop() {
     Serial.println( counters[1] );
     counters[0] = 0;
     counters[1] = 0;
+    Serial.println( "-----" );
   }
   
 

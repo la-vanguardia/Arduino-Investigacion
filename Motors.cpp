@@ -19,6 +19,14 @@ void Motors::setAllDutyCicle( unsigned char dutyCicle ){
   _topRight.setDutyCicle( dutyCicle );
 }
 
+void Motors::setAllState( unsigned char state ){
+  _bottomLeft.setState( state );
+  _bottomRight.setState( state );
+  _topLeft.setState( state );
+  _topRight.setState( state );
+}
+
+
 void Motors::setDutyCicle( unsigned char motorReference, unsigned char dutyCicle ){
     switch( motorReference ){
         case bottomLeft:
@@ -88,17 +96,10 @@ void Motors::setAction( unsigned char action ){
             _topLeft.start();
             _topRight.start();
             break;
-        case FORWARD:
-            _bottomLeft.forward();
-            _bottomRight.forward();
-            _topLeft.forward();
-            _topRight.forward();
-            break;
-        case BACK:
-            _bottomLeft.back();
-            _bottomRight.back();
-            _topLeft.back();
-            _topRight.back();
-            break;
+        default:
+            _bottomLeft.stop();
+            _bottomRight.stop();
+            _topLeft.stop();
+            _topRight.stop();
     }
 }

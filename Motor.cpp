@@ -10,16 +10,14 @@ Motor::Motor( unsigned char pinPwm, unsigned char pinForward, unsigned char pinB
     pinMode(_pinForward, OUTPUT);
     pinMode(_pinBack, OUTPUT);
 
-    analogWrite(_pinPwm, 0);
+    analogWrite(_pinPwm, _dutyCicle);
     digitalWrite(_pinForward, 0);
     digitalWrite(_pinBack, 0);
 }
 
 void Motor::setDutyCicle( unsigned char dutyCicle ){
     _dutyCicle = dutyCicle;
-    if( _state == ON ){
-      start();
-    }
+    analogWrite( _pinPwm , _dutyCicle * 255 / 100);
 }
 
 void Motor::setAction( unsigned char action ){
@@ -30,13 +28,12 @@ void Motor::setAction( unsigned char action ){
     case STOP:
       stop();
       break;
-    case BACK:
-      back();
-      break;
-    case FORWARD:
-      forward();
-      break;
   }
+}
+
+void Motor::setState( unsigned char state ){
+  _state = state;
+  aplyState();
 }
 
 unsigned char Motor::getDutyCicle(){
@@ -44,21 +41,26 @@ unsigned char Motor::getDutyCicle(){
 }
 
 void Motor::start(){
-    analogWrite( _pinPwm , _dutyCicle * 255 / 100);
-    _state = ON;
+    aplyState();
 }
 
 void Motor::stop(){
-    analogWrite( _pinPwm , 0);
-    _state = OFF;
-}
-
-void Motor::back(){
     digitalWrite(_pinForward, 0);
-    digitalWrite(_pinBack, 1);
+    digitalWrite(_pinBack, 0);
 }
 
-void Motor::forward(){
-    digitalWrite(_pinForward, 1);
-    digitalWrite(_pinBack, 0);
+void Motor::aplyState(){
+  switch( _state ){
+      case REVERSE:
+        digitalWrite(_pinForward, 0);
+        digitalWrite(_pinBack, 1);
+        break;
+      case FORWARD:
+        digitalWrite(_pinForward, 1);
+        digitalWrite(_pinBack, 0);
+        break;
+      default:
+        digitalWrite(_pinForward, 0);
+        digitalWrite(_pinBack, 0);
+    }
 }
