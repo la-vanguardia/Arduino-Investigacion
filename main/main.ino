@@ -10,7 +10,7 @@
 #define PULSE 4
 #define ONE_MINUTE 60   //tiempo en segundos
 #define TIME_INTERRUPT 1 //tiempo en segundos
-
+static volatile unsigned long debounce = 0; // Tiempo del rebote.
 /* MOTORES CON ARDUINO NANO / UNO  */
 /* 
 unsigned char pinsPwm[4] = { 9, 10, 5, 6 };
@@ -35,11 +35,19 @@ unsigned char motorSelected;
 Motors motors( pinsPwm, pinsBack, pinsForwards );
 
 void counterMotorBottomLeft(){
-  counters[0]++;
+  
+    if(  digitalRead (pinsInterrupt[0]) && (micros()-debounce > 500) && digitalRead (pinsInterrupt[0]) ) { 
+// Vuelve a comprobar que el encoder envia una señal buena y luego comprueba que el tiempo es superior a 1000 microsegundos y vuelve a comprobar que la señal es correcta.
+        debounce = micros(); // Almacena el tiempo para comprobar que no contamos el rebote que hay en la señal.
+         counters[0]++;}
 }
 
 void counterMotorBottomRight(){
-  counters[1]++;
+    if(  digitalRead (pinsInterrupt[1]) && (micros()-debounce > 500) && digitalRead (pinsInterrupt[1]) ) { 
+// Vuelve a comprobar que el encoder envia una señal buena y luego comprueba que el tiempo es superior a 1000 microsegundos y vuelve a comprobar que la señal es correcta.
+        debounce = micros(); // Almacena el tiempo para comprobar que no contamos el rebote que hay en la señal.
+         counters[1]++;} 
+ 
 }
 
 void counterMotorTopLeft(){
@@ -53,7 +61,9 @@ void counterMotorTopRight(){
 void rpm(){
   unsigned char i;
   for( i=0; i<4; i++){
-    rpmValues[i] = counters[i] * ONE_MINUTE / (PULSE * TIME_INTERRUPT);
+    rpmValues[i] = counters[i] * 1.875;
+  //  Serial.println(rpmValues[i]);
+    rpmValues[i]=0.0;
   }
   bandera_rpm = 1;
 }
